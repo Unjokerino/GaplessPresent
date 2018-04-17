@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<!--
+                          ____                  
+                            _.' :  `._               
+                        .-.'`.  ;   .'`.-.           
+               __      / : ___\ ;  /___ ; \      __  
+             ,'_ ""=-.:__;".-.";: :".-.":__;.-="" _`,
+             :' `.t""=-.. '<@.`;_  ',@:` ..-=""j.' `;
+                  `:-.._J '-.-'L__ `-.-' L_..-;'     
+                    "-.__ ;  .-"  "-.  : __.-"       
+                        L ' /.======.\ ' J           
+                         "-.   "__"   .-"            
+                        __.l"-:_MM_;-";.__           
+                     .-j/'.;  ;""""  / .'\"-.        
+                   .' /:`. "-.:     .-" .';  `.      
+                .-"  / ;  "-. "-..-" .-"  :    "-.   
+             .+"-.  : :      "-.__.-"      ;-._   \  
+             ; \  `.; ;                    : : "+. ; 
+             :  ;   ; ;                    : ;  : \: 
+             ;  :   ; :                    ;:   ;  : 
+            : \  ;  :  ;                  : ;  /  :: 
+            ;  ; :   ; :                  ;   :   ;: 
+            :  :  ;  :  ;                : :  ;  : ; 
+            ;\    :   ; :                ; ;     ; ; 
+            : `."-;   :  ;              :  ;    /  ; 
+             ;    -:   ; :              ;  : .-"   : 
+             :\     \  :  ;            : \.-"      : 
+              ;`.    \  ; :            ;.'_..-=  / ; 
+              :  "-.  "-:  ;          :/."      .'  :
+               \         \ :          ;/  __        :
+                \       .-`.\        /t-""  ":-+.   :
+                 `.  .-"    `l    __/ /`. :  ; ; \  ;
+                   \   .-" .-"-.-"  .' .'j \  /   ;/ 
+                    \ / .-"   /.     .'.' ;_:'    ;  
+                     :-""-.`./-.'     /    `.___.'   
+                           \ `t  ._  /               
+                            "-.t-._:'                
+
+							-->
+    <head>
+        <meta charset="utf-8">
+        <title>ТРС</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="images/teicon2.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!--<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script> -->
+		<link href="css.css" rel="stylesheet">
+		<script src="js/jquery-3.2.1.min.js"></script>
+		<script src="js/impress.js"></script>
+		
+
+    </head>
+    <body>
+		<div class="back"></div>
+		<div id="content">
+			
+			
+			<video id="videoSlide" style="position:relative;" width="100%" height=""  autoplay  codecs="vp9, vorbis">
+					<source class="video1"  src="videos/WSTART.mp4" type='video/webm;'>
+						Тег video не поддерживается вашим браузером. 
+			</video>
+			<video id="videoSlide2" style="position:relative;visibility: visible;display: block;" autoplay   width="100%" height=""  codecs="vp9, vorbis">
+				<source class="video2"  src="videos/.mp4" type='video/webm;'>
+					Тег video не поддерживается вашим браузером. 
+			</video>
+		
+		</div>
+	</body>
+	<script>
+	var i = 0;
+	var check = 0;
+	var videos = ["WSTART.mp4", "Honey_1.mp4", "iceberg_2.mp4", "Wiceberg_2.mp4", "iceberg_3.mp4", "Wiceberg_3.mp4", "iceberg_4.mp4", "Wiceberg_4.mp4", "iceberg_5.mp4", "Wiceberg_5.mp4", "iceberg_6.mp4", "Wiceberg_6.mp4", "iceberg_7.mp4", "Wiceberg_7.mp4", "iceberg_8.mp4", "Wiceberg_8.mp4", "iceberg_9.mp4", "Wiceberg_9.mp4", "iceberg_10.mp4", "Wiceberg_10.mp4", "iceberg_11.mp4", "Wiceberg_11.mp4", "iceberg_12.mp4", "Wiceberg_12.mp4", "iceberg_13.mp4", "Wiceberg_13.mp4", "iceberg_14.mp4", "Wiceberg_14.mp4", "iceberg_15.mp4", "Wiceberg_15.mp4"];
+	var video1 = document.getElementById("videoSlide"); 
+	var video2 = document.getElementById("videoSlide2"); 
+	var attr = $("#videoSlide").attr("loop");
+	var attr2 = $("#videoSlide2").attr("loop");
+		//$("#videoSlide2").get(0).load();
+		
+	$( document ).ready(function() {
+    
+
+		document.getElementById('videoSlide2').addEventListener('loadedmetadata', function() {
+			
+			this.currentTime = 0;
+		}, false);
+		$("#content").click(function() {
+			
+			
+			transition();
+			
+			
+		});
+		$(".back").click(function() {
+			
+		
+			transitionBack();
+			
+			
+		});
+
+		video1.addEventListener('ended', function () {
+			if(loopthis("videoSlide")){
+				video1.currentTime = 0;
+				video1.play();
+			}else{
+				
+				transition();
+			}
+
+		});
+		video2.addEventListener('ended', function () {
+			if(loopthis("videoSlide2")){
+				video2.currentTime = 0;
+				video2.play();
+			}else{
+				transition();
+			}
+
+		});
+		video1.addEventListener('play', function () {
+			$(".video2").prop("src","videos/"+videos[i+1]);
+			
+			video2.load();
+			video2.currentTime = 0;
+			video2.pause();
+
+		}, false);
+		video2.addEventListener('play', function () {
+			
+			$(".video1").prop("src","videos/"+videos[i+1]);
+			
+			video1.load();
+			video1.currentTime = 0;
+			video1.pause();
+
+		}, false);
+
+		
+		function transition(){
+			console.log(check,"check");
+			if(check == 0){
+				
+				var delay = video1.duration - video1.currentTime;
+				console.log(delay);
+				function delayTime(){
+					i++;
+					if(i >= videos.length){
+						i = 0;
+					}
+					$("#videoSlide").css("display","none");
+					video2.play();
+					video1.pause();
+					video1.currentTime = 0;
+					
+					
+					
+					
+					check = 1;
+					
+				}
+				setTimeout(function() { delayTime() }, delay*1000);
+				
+			}else{
+				var delay = video2.duration - video2.currentTime;
+				
+				function delayTime(){
+					i++;
+					if(i >= videos.length){
+						i = 0;
+					}
+					$("#videoSlide").css("display","block");
+					video1.play();
+					video2.pause();
+					video1.currentTime = 0;
+
+					
+					
+					
+					check = 0;
+					
+				}
+				setTimeout(function() { delayTime() }, delay*1000);
+			}
+			
+			
+
+		}
+		
+		function transitionBack(){
+			console.log(check,"check",i,);
+			if(check == 0){
+				
+				var delay = video1.duration - video1.currentTime;
+				console.log(delay);
+				
+					i--;
+					if(i >= videos.length){
+						i = 0;
+					}
+					$("#videoSlide").css("display","none");
+					video2.play();
+					video1.pause();
+					video1.currentTime = 0;
+					
+					
+					
+					
+					check = 1;
+					
+				
+				
+				
+			}else{
+				var delay = video2.duration - video2.currentTime;
+				
+				
+					i--;
+					if(i >= videos.length){
+						i = 0;
+					}
+					$("#videoSlide").css("display","block");
+					video1.play();
+					video2.pause();
+					video1.currentTime = 0;
+
+					
+					
+					
+					check = 0;
+					
+				
+				
+			}
+			
+			
+
+		}
+		
+		function loopthis(videoID){
+			console.log(videos[i], i, videos.length,videoID);
+			if(videos[i][0] == "W"){
+				console.log("true");
+				return(true);
+				
+			}else{
+				console.log("untroo");
+				return(false);
+				
+				
+			}
+
+		}
+
+	});
+		
+
+
+		/*
+		video2.pause();
+	
+	
+	
+		$("#content").click(function() {
+			
+			
+			transition();
+			loopthis();
+			//nextVideo();
+			
+		});
+		function next(){
+			console.log(check,"check");
+			var vid = "";
+			var bvid = "";
+			if(check == 1){
+				vid = ".video1";
+				bvid = "#videoSlide"
+				check = 0;
+			}else{
+				vid = ".video2";
+				bvid = "#videoSlide2"
+				check = 1;
+			}
+			$(vid).prop("src","videos/"+videos[i]);
+			
+					$(bvid).get(0).load();
+					
+					i++;
+		}
+
+		function transition(){
+			console.log(check,"check");
+			if(check == 0){
+				
+				var delay = video1.duration - video1.currentTime;
+				console.log(delay);
+				next();
+				video2.play();
+				function delayTime(){
+					trans();
+				}
+				setTimeout(function() { delayTime() }, delay*1000);
+				
+			}else{
+				var delay = video2.duration - video2.currentTime;
+				console.log(delay);
+				next();
+				video1.play();
+				function delayTime(){
+					trans2();
+				}
+				setTimeout(function() { delayTime() }, delay*1000);
+			}
+
+		}
+
+		function trans(){
+			loopthis()
+			
+			if(i >= videos.length){
+				i = 0;
+			}
+			
+			
+			video1.currentTime = 0;
+
+			
+			$("#videoSlide").css("display","none");
+			
+			check = 1;
+		}
+
+		function trans2(){
+			loopthis()
+			
+			
+			video2.currentTime = 0;
+			$("#videoSlide").css("display","block");
+			
+			
+			check = 0;
+
+		}
+		
+		
+			$('video1').bind('play', function (e) {
+				next();
+				video2.currentTime = 5;
+				setTimeout(function() { video2.currentTime = 0  }, 5000);
+
+			});
+			$('video2').bind('play', function (e) {
+				
+				
+
+			});
+
+
+		function loadNext(){
+			
+
+		}
+		function nextVideo(check){
+			var vid = "";
+			var bvid = "";
+			if(check == 1){
+				vid = ".video1";
+				bvid = "#videoSlide"
+			}else{
+				vid = ".video2";
+				bvid = "#videoSlide2"
+			}
+			console.log(vid,bvid);
+			$(vid).prop("src","videos/"+videos[i]);
+			
+			$(bvid).get(0).load();
+			i++;
+			if(i >= videos.length){
+				i = 0;
+			}
+		}
+		
+		
+		$("#videoSlide").bind("ended", function() {
+			
+			if(videos[i][0] == "W"){
+				loopthis();
+				transition();
+			}
+			else{
+				transition();
+			}
+		});
+		$("#videoSlide2").bind("ended", function() {
+			
+			if(videos[i][0] == "W"){
+				loopthis();
+				transition();
+			}
+			else{
+				transition();
+			}
+		});
+		*/
+	
+	</script>
+</html>
